@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "734128935154",
+    "firebase_url": "https://hitrisa-a8333-default-rtdb.firebaseio.com",
+    "project_id": "hitrisa-a8333",
+    "storage_bucket": "hitrisa-a8333.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734128935154:android:1ebe03a9982c4a9e82806b",
+        "android_client_info": {
+          "package_name": "com.example.ontap3011"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZtONuX1zGftdoYUx4Ya65iP_k7H-eVuo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
