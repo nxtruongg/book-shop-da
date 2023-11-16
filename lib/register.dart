@@ -16,43 +16,60 @@ class Register_Screen extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(15),
-            child: const TextField(
-              keyboardType: TextInputType.emailAddress,
+            child: TextField(
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Email',
                 border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
+                ),
                 prefixIcon: Icon(Icons.email),
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(15),
-            child: const TextField(
+            child: TextField(
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Phone',
                 border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
+                ),
                 prefixIcon: Icon(Icons.phone),
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(15),
-            child: const TextField(
+            child: TextField(
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 labelText: 'Username',
                 border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
+                ),
                 prefixIcon: Icon(Icons.person),
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(15),
-            child: const TextField(
-              obscureText: true,
+            child: TextField(
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                labelText: 'Password"',
+                labelText: 'Password',
                 border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
+                ),
                 prefixIcon: Icon(Icons.password),
               ),
             ),
@@ -60,12 +77,35 @@ class Register_Screen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(15),
             child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('Đăng Ký'),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Đăng Ký'),
+                      content: Text('Chúc mừng bạn đã đăng ký thành công'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
               style: ButtonStyle(
                 backgroundColor:
                     MaterialStateProperty.all(Color(0xFFBA1541)), // Đổi màu nút
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0), // Đặt góc tròn
+                  ),
+                ),
+                minimumSize: MaterialStateProperty.all(
+                    Size(200, 40)), // Đặt kích thước tối thiểu
               ),
+              child: const Text('Đăng Ký'),
             ),
           ),
           Container(

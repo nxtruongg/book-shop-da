@@ -70,9 +70,9 @@ class _NavigationBarState extends State<NavigationBar> {
             label: 'Giỏ hàng',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            activeIcon: Icon(Icons.notifications, color: Color(0xFFBA1541)),
-            label: 'Thông báo',
+            icon: Icon(Icons.search),
+            activeIcon: Icon(Icons.search, color: Color(0xFFBA1541)),
+            label: 'Tìm kiếm',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
