@@ -1,16 +1,15 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:ontap3011/profile.dart';
-import 'package:ontap3011/trangchu.dart';
+import 'package:bookshop/trangchu.dart';
 
+import 'firebase_options.dart';
 Future<void> main(List<String> args) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
-
-// Future<void> main(List<String> args) async {
-//   WidgetsFlutterBinding.ensureInitialized();
-//   await Firebase.initializeApp();
-//   runApp(MyApp());
-// }
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

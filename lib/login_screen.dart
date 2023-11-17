@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:ontap3011/register.dart';
-import 'package:ontap3011/trangchu.dart';
+import 'package:bookshop/register.dart';
+import 'package:bookshop/trangchu.dart';
 
 import 'forget_Sreen.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

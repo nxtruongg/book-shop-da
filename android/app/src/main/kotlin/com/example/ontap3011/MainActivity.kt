@@ -1,4 +1,4 @@
-package com.example.ontap3011
+package com.example.bookshop
 
 import io.flutter.embedding.android.FlutterActivity
 

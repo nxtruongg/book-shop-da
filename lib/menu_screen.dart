@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ontap3011/product_detail.dart';
-import 'package:ontap3011/product_object.dart';
-import 'package:ontap3011/product_provider.dart';
+import 'package:bookshop/product_detail.dart';
+import 'package:bookshop/product_object.dart';
+import 'package:bookshop/product_provider.dart';
 
 import 'login_screen.dart';
 

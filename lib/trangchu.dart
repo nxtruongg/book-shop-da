@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ontap3011/profile.dart';
+import 'package:bookshop/profile.dart';
 import 'login_screen.dart';
 import 'menu_screen.dart';
 
