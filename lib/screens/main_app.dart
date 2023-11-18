@@ -1,5 +1,6 @@
 import 'package:bookshop/screens/auth/login_screen.dart';
 import 'package:bookshop/screens/home/home_screen.dart';
+import 'package:bookshop/screens/product/product_group.dart';
 import 'package:bookshop/screens/user/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -24,10 +25,11 @@ class _NavigationBarState extends State<NavigationBar> {
   PageController _pageController = PageController();
   List<Widget> _pages = [
     HomeScreen(),
-    LoginScreen(),
+    ProductGroup(),
     CartScreen(),
     NotificationsScreen(),
-    ProfileApp()
+    LoginScreen(),
+    //ProfileApp()
   ];
 
   void _onTabTapped(int index) {
@@ -62,9 +64,9 @@ class _NavigationBarState extends State<NavigationBar> {
             // activeLabelStyle: TextStyle(color: Color(0xFFBA1541)),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            activeIcon: Icon(Icons.account_circle, color: Color(0xFFBA1541)),
-            label: 'Tài khoản',
+            icon: Icon(Icons.list_alt_outlined),
+            activeIcon: Icon(Icons.list_alt, color: Color(0xFFBA1541)),
+            label: 'Sản phẩm',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shopping_cart),
@@ -74,12 +76,12 @@ class _NavigationBarState extends State<NavigationBar> {
           BottomNavigationBarItem(
             icon: Icon(Icons.search),
             activeIcon: Icon(Icons.search, color: Color(0xFFBA1541)),
-            label: 'Tìm kiếm',
+            label: 'Thông báo',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             activeIcon: Icon(Icons.person, color: Color(0xFFBA1541)),
-            label: 'Thông tin cá nhân',
+            label: 'Tài khoản',
           ),
         ],
         selectedLabelStyle: TextStyle(color: Color(0xFFBA1541)),
