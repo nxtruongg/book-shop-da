@@ -1,4 +1,5 @@
 import 'package:bookshop/screens/auth/register.dart';
+import 'package:bookshop/screens/user/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:bookshop/screens/main_app.dart';
 
@@ -60,7 +61,10 @@ class LoginScreen extends StatelessWidget {
                         content: Text('Chúc mừng bạn đã đăng nhập thành công'),
                         actions: [
                           TextButton(
-                              onPressed: () => Navigator.pop(context),
+                              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                                builder: (context) =>
+                                   ProfileApp(),
+                              )),
                               child: Text('OK'))
                         ],
                       );
