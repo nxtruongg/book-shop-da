@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ontap3011/profile.dart';
+
 import 'login_screen.dart';
 import 'menu_screen.dart';
 
@@ -8,6 +9,7 @@ class Menu extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: NavigationBar(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

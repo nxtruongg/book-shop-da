@@ -69,6 +69,12 @@ flutter:
     - images/avatadefault.png
     - images/logo.png
     - data/ontap.json
+    - images/1.png
+    - images/2.png
+    -  images/3.png
+    - images/4.png
+    - images/5.png
+    - images/6.png
     # - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

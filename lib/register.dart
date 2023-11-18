@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
-import 'forget_Sreen.dart';
+import 'package:ontap3011/login_screen.dart';
 
 class Register_Screen extends StatelessWidget {
   @override
@@ -9,7 +7,8 @@ class Register_Screen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFBA1541),
-        title: const Text('Đăng Ký'),
+        title: Text('Đăng Ký'),
+        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -110,23 +109,34 @@ class Register_Screen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(15),
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ForgetPass_Screen()),
-                );
-              },
-              //Bổ sung 5
-
-              child: const Text(
-                'Quên Mật Khẩu',
-                style: TextStyle(
-                  color: Color(0xFFBA1541), // Đổi màu chữ thành mã màu "ba1541"
-                  decoration: TextDecoration.underline,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Bạn Đã có tài khoản?',
+                  style: TextStyle(
+                    fontSize: 15,
+                  ),
                 ),
-              ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => LoginScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Đăng nhập ngay',
+                    style: TextStyle(
+                      color: Color(
+                          0xFFBA1541), // Đổi màu chữ thành mã màu "ba1541"
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

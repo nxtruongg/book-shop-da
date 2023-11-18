@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ontap3011/profile.dart';
 import 'package:ontap3011/trangchu.dart';
 
 Future<void> main(List<String> args) async {
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       home: Menu(),
     );
   }

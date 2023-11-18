@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ontap3011/trangchu.dart';
+
 import 'editprofile.dart';
 import 'history.dart';
 
@@ -8,7 +10,16 @@ class ProfileApp extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFFBA1541),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => Menu(), // Điều hướng đến trang Menu
+            ));
+          },
+        ),
         title: Text('Thông tin cá nhân'),
+        centerTitle: true,
         actions: [
           IconButton(
             icon: Icon(Icons.edit),

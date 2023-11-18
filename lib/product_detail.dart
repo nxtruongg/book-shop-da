@@ -1,5 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ontap3011/product_object.dart';
 
@@ -21,7 +20,8 @@ class ProductDetailState extends State<ProductDetail> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Color(0xFFBA1541),
-          title: Text(''),
+          title: Text('Chi Tiết Sản Phẩm'),
+          centerTitle: true,
         ),
         body: Stack(
           children: [
