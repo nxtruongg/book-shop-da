@@ -1,22 +1,21 @@
 {
   "project_info": {
-    "project_number": "734128935154",
-    "firebase_url": "https://hitrisa-a8333-default-rtdb.firebaseio.com",
-    "project_id": "hitrisa-a8333",
-    "storage_bucket": "hitrisa-a8333.appspot.com"
+    "project_number": "575278900422",
+    "project_id": "bookshop-b3ca5",
+    "storage_bucket": "bookshop-b3ca5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:734128935154:android:1ebe03a9982c4a9e82806b",
+        "mobilesdk_app_id": "1:575278900422:android:210c4a20fa50272c7c23c7",
         "android_client_info": {
-          "package_name": "com.example.ontap3011"
+          "package_name": "com.example.bookshop"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDZtONuX1zGftdoYUx4Ya65iP_k7H-eVuo"
+          "current_key": "AIzaSyA0qAOvBBurqwPio2imni08alx_rfzYE5M"
         }
       ],
       "services": {
