@@ -1,11 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshop/product_object.dart';
+import 'package:bookshop/models/product_object.dart';
 
 class ProductDetail extends StatefulWidget {
-  ProductObject product;
-  ProductDetail({Key? key, required this.product}) : super(key: key);
+  final ProductObject product;
+  const ProductDetail({Key? key, required this.product}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

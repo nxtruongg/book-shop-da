@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshop/trangchu.dart';
+import 'package:bookshop/screens/main_app.dart';
 
 import 'firebase_options.dart';
 Future<void> main(List<String> args) async {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      home: Menu(),
+      home: MainApp(),
     );
   }
 }

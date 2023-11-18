@@ -1,6 +1,6 @@
+import 'package:bookshop/screens/auth/register.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshop/register.dart';
-import 'package:bookshop/trangchu.dart';
+import 'package:bookshop/screens/main_app.dart';
 
 import 'forget_Sreen.dart';
 
@@ -16,7 +16,7 @@ class LoginScreen extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => Menu(), // Điều hướng đến trang Menu
+                builder: (context) => MainApp(), // Điều hướng đến trang Menu
               ));
             },
           )),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'forget_Sreen.dart';
+import '../auth/forget_Sreen.dart';
 
 class EditProfileScreen extends StatelessWidget {
   @override

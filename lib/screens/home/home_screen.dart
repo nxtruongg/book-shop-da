@@ -1,18 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:bookshop/product_detail.dart';
-import 'package:bookshop/product_object.dart';
-import 'package:bookshop/product_provider.dart';
+ import 'package:flutter/material.dart';
+import 'package:bookshop/screens/product/product_detail.dart';
+import 'package:bookshop/models/product_object.dart';
+import 'package:bookshop/provider/product_provider.dart';
 
-import 'login_screen.dart';
+import '../auth/login_screen.dart';
 
-class MenuScreen extends StatefulWidget {
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
-    return MenuScreenState();
+    return HomeScreenState();
   }
 }
 
-class MenuScreenState extends State<MenuScreen> {
+class HomeScreenState extends State<HomeScreen> {
   List<ProductObject> lsProducts = [];
   void _LoadDanhSach() async {
     final data = await ProductProvider.getAllContacts();

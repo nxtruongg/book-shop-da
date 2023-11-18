@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:bookshop/product_object.dart';
+import 'package:bookshop/models/product_object.dart';
 
 class ProductProvider {
   //Lay danh sach du lieu tu json

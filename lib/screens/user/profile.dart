@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'editprofile.dart';
-import 'history.dart';
+import '../order/order_history.dart';
 
 class ProfileApp extends StatelessWidget {
   @override

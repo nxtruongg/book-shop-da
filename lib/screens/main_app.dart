@@ -1,18 +1,20 @@
+import 'package:bookshop/screens/auth/login_screen.dart';
+import 'package:bookshop/screens/home/home_screen.dart';
+import 'package:bookshop/screens/user/profile.dart';
 import 'package:flutter/material.dart';
-import 'package:bookshop/profile.dart';
-import 'login_screen.dart';
-import 'menu_screen.dart';
 
-class Menu extends StatelessWidget {
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: NavigationBar(),
-    );
+    return NavigationBar();
   }
 }
 
 class NavigationBar extends StatefulWidget {
+  const NavigationBar({super.key});
+
   @override
   _NavigationBarState createState() => _NavigationBarState();
 }
@@ -21,7 +23,7 @@ class _NavigationBarState extends State<NavigationBar> {
   int _currentIndex = 0;
   PageController _pageController = PageController();
   List<Widget> _pages = [
-    MenuScreen(),
+    HomeScreen(),
     LoginScreen(),
     CartScreen(),
     NotificationsScreen(),
@@ -32,7 +34,7 @@ class _NavigationBarState extends State<NavigationBar> {
     setState(() {
       _currentIndex = index;
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 300), curve: Curves.easeOut);
+          duration: const Duration(milliseconds: 300), curve: Curves.easeOut);
     });
   }
 
