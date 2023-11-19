@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ontap3011/cart.dart';
 import 'package:ontap3011/profile.dart';
 
 import 'login_screen.dart';
@@ -25,7 +26,7 @@ class _NavigationBarState extends State<NavigationBar> {
   List<Widget> _pages = [
     MenuScreen(),
     LoginScreen(),
-    CartScreen(),
+    Cart(),
     NotificationsScreen(),
     ProfileScreen()
   ];
