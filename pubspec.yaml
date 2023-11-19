@@ -23,6 +23,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - images/avatadefault.png
-    - images/logo.png
-    - data/ontap.json
+    - images/
+    - data/

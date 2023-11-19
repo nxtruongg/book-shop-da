@@ -1,4 +1,5 @@
 import 'package:bookshop/screens/auth/login_screen.dart';
+import 'package:bookshop/screens/cart/cart.dart';
 import 'package:bookshop/screens/home/home_screen.dart';
 import 'package:bookshop/screens/product/product_group.dart';
 import 'package:bookshop/screens/user/profile.dart';
@@ -26,7 +27,7 @@ class _NavigationBarState extends State<NavigationBar> {
   List<Widget> _pages = [
     HomeScreen(),
     ProductGroup(),
-    CartScreen(),
+    Cart(),
     NotificationsScreen(),
     LoginScreen(),
     //ProfileApp()

@@ -1,6 +1,5 @@
 import 'package:bookshop/screens/product/product_detail.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/product_object.dart';
 import '../../provider/product_provider.dart';
 import '../auth/login_screen.dart';
