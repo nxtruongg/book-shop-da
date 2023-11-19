@@ -42,10 +42,10 @@ class _OderPageState extends State<OderPage> {
       status: 'Trạng Thái',
       products: [
         Product(name: 'Sản Phẩm 1', price: 20.0, image: 'images/logo.png'),
-        // Thêm các sản phẩm khác nếu cần
+
       ],
       paymentMethod: 'Phương Thức Thanh Toán',
-      totalAmount: 100.0, // Điền số tiền tổng
+      totalAmount: 100.0, //
     );
 
     return Oder(order: sampleOrder);
@@ -90,7 +90,7 @@ class Oder extends StatelessWidget {
               Text('Tổng Tiền: ${order.totalAmount}'),
               Center(child:ElevatedButton(
                 onPressed: () {
-                  // Xử lý khi nút thanh toán được nhấn
+
                 },
                 child: Text('Xác Nhận Thanh Toán'),
               ) ,)
@@ -103,7 +103,7 @@ class Oder extends StatelessWidget {
           //     Text('Tổng Tiền: ${order.totalAmount}'),
           //     ElevatedButton(
           //       onPressed: () {
-          //         // Xử lý khi nút thanh toán được nhấn
+          //
           //       },
           //       child: Text('Xác Nhận Thanh Toán'),
           //     ),
@@ -125,7 +125,7 @@ class ProductItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
         leading: Image.asset(
-          product.image, // Đặt tên ảnh sản phẩm phù hợp
+          product.image,
           width: 50,
           height: 50,
           fit: BoxFit.cover,
@@ -133,7 +133,7 @@ class ProductItem extends StatelessWidget {
         title: Text(product.name),
         subtitle: Text('Giá: ${product.price}'),
         trailing: Text(
-            'Số lượng: 1'), // Bạn có thể thay đổi giá trị này tùy thuộc vào số lượng sản phẩm
+            'Số lượng: 1'), 
       ),
     );
   }
