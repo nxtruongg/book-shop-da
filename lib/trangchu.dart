@@ -27,7 +27,7 @@ class _NavigationBarState extends State<NavigationBar> {
     LoginScreen(),
     CartScreen(),
     NotificationsScreen(),
-    ProfileApp()
+    ProfileScreen()
   ];
 
   void _onTabTapped(int index) {
