@@ -18,6 +18,7 @@ class _CartState extends State<Cart> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Giỏ Hàng'),
+        backgroundColor: Color(0xFFBA1541),
       ),
       body: ListView.builder(
         itemCount: cartItems.length,
@@ -57,6 +58,14 @@ class _CartState extends State<Cart> {
                   //  nút thanh toán
                 },
                 child: Text('Thanh toán'),
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xFFBA1541),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                ),
               ),
             ],
           ),

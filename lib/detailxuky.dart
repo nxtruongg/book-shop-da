@@ -24,10 +24,10 @@ class OrderItem {
   });
 }
 
-class OrderDetailPage extends StatelessWidget {
+class chitietxuly extends StatelessWidget {
   final Order order;
 
-  OrderDetailPage({required this.order});
+  chitietxuly({required this.order});
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +107,24 @@ class OrderDetailPage extends StatelessWidget {
               title: Text(items[index].productName),
             );
           },
+        ),
+
+        SizedBox(height: 20), // Khoảng cách giữa danh sách sản phẩm và nút
+        Center(
+          child: ElevatedButton(
+            onPressed: () {
+              // Xử lý logic khi nút hủy đơn được nhấn
+              // Ví dụ: hiển thị hộp thoại xác nhận, gọi hàm hủy đơn, v.v.
+            },
+            child: Text('Hủy Đơn'),
+            style: ElevatedButton.styleFrom(
+              primary: Color(0xFFBA1541),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(18.0),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            ),
+          ),
         ),
       ],
     );

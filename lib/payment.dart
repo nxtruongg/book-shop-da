@@ -58,6 +58,7 @@ class Payment extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xFFBA1541),
         title: Text('Chi tiết đặt hàng'),
       ),
       body: Padding(
@@ -85,11 +86,21 @@ class Payment extends StatelessWidget {
               Text('Phương Thức Thanh Toán: ${order.paymentMethod}'),
               Text('Tổng Tiền: ${order.totalAmount}'),
               Center(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: ElevatedButton(
                   onPressed: () {},
                   child: Text('Xác Nhận Thanh Toán'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFBA1541),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  ),
                 ),
-              )
+              ))
             ],
           )
           // Row(

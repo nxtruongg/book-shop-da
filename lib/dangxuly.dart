@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'OrderDetailPage.dart';
+import 'detailxuky.dart';
 
-class OrderHistoryPage extends StatelessWidget {
+class xuly extends StatelessWidget {
   final List<Order> orders = [
     Order(
       orderId: '12345',
@@ -53,7 +53,7 @@ class OrderHistoryPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => OrderDetailPage(order: orders[index]),
+                  builder: (context) => chitietxuly(order: orders[index]),
                 ),
               );
             },

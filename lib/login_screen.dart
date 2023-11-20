@@ -73,11 +73,17 @@ class LoginScreen extends StatelessWidget {
           ),
           Container(
             padding: const EdgeInsets.all(15),
-            child: const TextField(
+            child: TextField(
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.person)),
+                labelText: 'Username',
+                border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
+                ),
+                prefixIcon: Icon(Icons.person),
+              ),
             ),
           ),
           Container(
@@ -87,6 +93,10 @@ class LoginScreen extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
+                ),
                 prefixIcon: Icon(Icons.password),
               ),
             ),

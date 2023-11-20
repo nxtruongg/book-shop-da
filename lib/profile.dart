@@ -12,22 +12,6 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Color(0xFFBA1541),
         title: Text('Thông tin cá nhân'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.exit_to_app,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => LoginScreen(),
-                ),
-              );
-            },
-          )
-        ],
       ),
       body: Align(
         alignment: Alignment.topCenter,
@@ -51,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                'Nguyễn Văn A',
+                'Phan Minh Trí',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -61,7 +45,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: 10),
               Text(
-                'Email: nguyenvana@gmail.com',
+                'Email: phanminhtri@gmail.com',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -78,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Text(
-                '123 Đường ABC, Quận XYZ, Thành phố HCM',
+                'Chung cư 212 Nguyễn Trãi, Thành phố HCM',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -122,6 +106,51 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   label: Text(
                     'Thông tin đơn hàng',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFBA1541),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                margin: EdgeInsets.only(top: 10.0),
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text('Đăng Xuất'),
+                          content: Text('Bạn có chắc muốn đăng xuất!!!'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context); // Đóng dialog
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => LoginScreen()));
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  icon: Icon(
+                    Icons.exit_to_app,
+                    size: 24.0,
+                  ),
+                  label: Text(
+                    'Đăng xuất',
                     style: TextStyle(fontSize: 18),
                   ),
                   style: ElevatedButton.styleFrom(
