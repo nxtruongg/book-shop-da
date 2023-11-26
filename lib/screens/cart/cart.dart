@@ -1,5 +1,8 @@
+import 'dart:ffi';
+import 'package:bookshop/models/cart_models.dart';
 import 'package:bookshop/screens/order/order.dart';
 import 'package:flutter/material.dart';
+
 class Cart extends StatefulWidget {
   const Cart({super.key});
 
@@ -8,41 +11,58 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  List<Product> cartItems = [
-    Product(name: 'Sản phẩm 1', price: 20.0, image: 'images/logo.png'),
-    Product(name: 'Sản phẩm 2', price: 30.0, image: 'images/logo.png')
-  ];
+  final CartModels cartmodels = CartModels();
+  late List<CartObj> cartItems = [];
+
   @override
+  void initState() {
+    super.initState();
+    loadCarts();
+  }
+
+  Future<void> loadCarts() async {
+    try {
+      cartItems = await cartmodels.getCart();
+      setState(() {});
+    } catch (e) {}
+  }
+
+  Future<void> deleteItemCart(CartObj item) async {
+    await cartmodels.deleteItemCart(item);
+    setState(() {
+       cartItems.remove(item);
+    });
+  }
+
   Widget build(BuildContext context) {
+    print(cartItems);
     return Scaffold(
       appBar: AppBar(
         title: Text('Giỏ Hàng'),
       ),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          return CartItem(
-            product: cartItems[index],
-            onIncrease: () {
-              setState(() {
-                // Tăng số lượng sản phẩm
-              });
-            },
-            onDecrease: () {
-              setState(() {
-                // Giảm số lượng sản phẩm
-
-              });
-            },
-            onRemove: () {
-              setState(() {
-                // Xóa sản phẩm khỏi giỏ hàng
-                cartItems.removeAt(index);
-              });
-            },
-          );
-        },
-      ),
+      body: cartItems != null
+          ? ListView.builder(
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
+                return CartItem(
+                  product: cartItems[index],
+                  onIncrease: () {
+                    setState(() {
+                      // Tăng số lượng sản phẩm
+                    });
+                  },
+                  onDecrease: () {
+                    setState(() {
+                      // Giảm số lượng sản phẩm
+                    });
+                  },
+                  onRemove: () {
+                    deleteItemCart(cartItems[index]);
+                  },
+                );
+              },
+            )
+          : null,
       bottomNavigationBar: BottomAppBar(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -52,7 +72,8 @@ class _CartState extends State<Cart> {
               Text('Tổng tiền: ${calculateTotalPrice()}'),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => OderPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => OderPage(cart:cartItems)));
                   //  nút thanh toán
                 },
                 child: Text('Thanh toán'),
@@ -63,19 +84,14 @@ class _CartState extends State<Cart> {
       ),
     );
   }
-  double calculateTotalPrice() {
-    return cartItems.fold(0.0, (sum, item) => sum + item.price);
+
+double calculateTotalPrice() {
+    return cartItems.fold(0.0, (sum, item) => sum + item.gia_ban);
   }
 }
-class Product {
-  final String name;
-  final double price;
-  final String image;
 
-  Product({required this.name, required this.price, required this.image});
-}
 class CartItem extends StatelessWidget {
-  final Product product;
+  final CartObj product;
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;
   final VoidCallback onRemove;
@@ -92,12 +108,17 @@ class CartItem extends StatelessWidget {
     return Card(
       margin: EdgeInsets.all(8.0),
       child: ListTile(
-        leading: Image.asset(product.image,width: 56.0,height: 56.0,fit: BoxFit.cover,),
-        title: Text(product.name),
+        leading: Image.asset(
+          product.image,
+          width: 56.0,
+          height: 56.0,
+          fit: BoxFit.cover,
+        ),
+        title: Text(product.ten_sp),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Giá: ${product.price}'),
+            Text('Giá: ${product.gia_ban}'),
             Row(
               children: [
                 IconButton(
