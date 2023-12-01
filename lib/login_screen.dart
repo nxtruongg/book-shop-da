@@ -1,10 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:ontap3011/component/dialog.dart';
 import 'package:ontap3011/forget_Sreen.dart';
 import 'package:ontap3011/register.dart';
 import 'package:ontap3011/trangchu.dart';
+import 'package:dio/dio.dart';
+import 'dart:convert';
 
-class LoginScreen extends StatelessWidget {
+import 'main.dart';
+
+class LoginScreen extends StatefulWidget {
   @override
+  _LoginScreen createState() => _LoginScreen();
+}
+
+class _LoginScreen extends State<LoginScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  String? emailError;
+  String? passwordError;
+
+  Future<void> login() async {
+    var headers = {
+      'Authorization': 'Basic w6h3ZnNkZjpmc2Rmc2Rm',
+    };
+
+    try {
+      final String basicAuth = 'Basic ' +
+          base64Encode(utf8
+              .encode('${emailController.text}:${passwordController.text}'));
+      headers['Authorization'] =
+          basicAuth; // Thêm thông tin Authorization mới vào headers
+
+      var dio = Dio();
+      var response = await dio.request(
+        'https://api.goodapp.vn/auth/local',
+        options: Options(
+          method: 'GET',
+          headers: headers,
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        CustomDialog.showMyDialog(
+            context, "Thanh cong", "ban da dang nhap thanh cong!");
+
+        print(json.encode(response.data));
+      } else {
+        print(response.statusMessage);
+      }
+    } catch (error) {
+      if (error is DioError) {
+        DioError dioError = error;
+        print('Dio Error: ${dioError.message}');
+
+        if (dioError.response != null) {
+          print('Status code: ${dioError.response!.statusCode}');
+          print('Data: ${dioError.response!.data}');
+
+          CustomDialog.showMyDialog(context, "Error",
+              'Dang nhap khong thanh cong ${dioError.response!.data}');
+          // print('Headers: ${dioError.response!.headers}');
+        }
+      }
+      print('Error: $error');
+      // Xử lý lỗi không mong muốn
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -13,7 +76,7 @@ class LoginScreen extends StatelessWidget {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
-              builder: (context) => Menu(), // Điều hướng đến trang Menu
+              builder: (context) => Menu(),
             ));
           },
         ),
@@ -74,22 +137,25 @@ class LoginScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(15),
             child: TextField(
-              keyboardType: TextInputType.phone,
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                labelText: 'Username',
+                labelText: 'Email',
                 border: OutlineInputBorder(),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                       color: Color(0xFFBA1541)), // Đặt màu sắc khi ô được chọn
                 ),
-                prefixIcon: Icon(Icons.person),
+                prefixIcon: Icon(Icons.email),
               ),
             ),
           ),
           Container(
             padding: const EdgeInsets.all(15),
-            child: const TextField(
+            child: TextField(
               obscureText: true,
+              controller: passwordController,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 labelText: 'Password',
                 border: OutlineInputBorder(),
@@ -105,19 +171,8 @@ class LoginScreen extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             child: ElevatedButton(
               onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: Text('Đăng nhập'),
-                        content: Text('Chúc mừng bạn đã đăng nhập thành công'),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text('OK'))
-                        ],
-                      );
-                    });
+                print("Đăng nhập");
+                login();
               },
               style: ButtonStyle(
                 backgroundColor:

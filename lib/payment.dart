@@ -1,20 +1,14 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:ontap3011/component/dialog.dart';
+import 'package:ontap3011/models/cartmodels.dart';
+import 'package:ontap3011/models/so_models.dart';
 
 class Order {
-  final String date;
-  final String address;
-  final String status;
-  final List<Product> products;
-  final String paymentMethod;
-  final double totalAmount;
+  final List<CartObj> products;
 
   Order({
-    required this.date,
-    required this.address,
-    required this.status,
     required this.products,
-    required this.paymentMethod,
-    required this.totalAmount,
   });
 }
 
@@ -22,43 +16,53 @@ class Product {
   final String name;
   final double price;
   final String image;
-
   Product({required this.name, required this.price, required this.image});
 }
 
-class PayMentPage extends StatefulWidget {
-  const PayMentPage({super.key});
+class OderPage extends StatefulWidget {
+  final List<CartObj> cart;
+  const OderPage({super.key, required this.cart});
 
   @override
-  State<PayMentPage> createState() => _PayMentPageState();
+  State<OderPage> createState() => _OderPageState();
 }
 
-class _PayMentPageState extends State<PayMentPage> {
-  @override
-  Widget build(BuildContext context) {
-    Order sampleOrder = Order(
-      date: 'Ngày Mua',
-      address: 'Địa Chỉ',
-      status: 'Trạng Thái',
-      products: [
-        Product(name: 'Sản Phẩm 1', price: 20.0, image: 'images/logo.png'),
-      ],
-      paymentMethod: 'Phương Thức Thanh Toán',
-      totalAmount: 100.0, //
+class _OderPageState extends State<OderPage> {
+  final TextEditingController diachi = TextEditingController();
+  final SoModels soModels = SoModels();
+  void Submit(details, String dia_chi) async {
+    await soModels.Postdata(details, dia_chi);
+    CustomDialog.showMyDialog(context, "Thanh cong", "Tao don hang thanh cong");
+  }
+
+  void showSuccessSnackBar(String message) {
+    final snackBar = SnackBar(
+      content: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        child: Text(
+          message,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 18.0, color: Colors.white), // Thay đổi màu văn bản
+        ),
+      ),
+      duration: Duration(seconds: 3),
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.green, // Thay đổi màu nền
     );
 
-    return Payment(order: sampleOrder);
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-}
 
-class Payment extends StatelessWidget {
-  const Payment({super.key, required this.order});
-  final Order order;
   @override
   Widget build(BuildContext context) {
+    Order sampleOrder = Order(products: widget.cart);
+    DateTime currentDate = DateTime.now();
+    String formattedDate =
+        "${currentDate.day}/${currentDate.month}/${currentDate.year}";
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFBA1541),
         title: Text('Chi tiết đặt hàng'),
       ),
       body: Padding(
@@ -66,12 +70,22 @@ class Payment extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Ngày Mua: ${order.date}'),
-            Text('Địa Chỉ: ${order.address}'),
-            Text('Trạng Thái: ${order.status}'),
+            Text('Ngày đặt: ${formattedDate}'),
+            //Text('Ngày Mua:'),
+            Text('Địa chỉ:'),
+
+            TextField(
+              controller: diachi,
+              decoration: InputDecoration(
+                hintText: 'Nhập địa chỉ của bạn',
+                border: OutlineInputBorder(),
+              ),
+            ),
             SizedBox(height: 16.0),
             Text('Sản Phẩm:'),
-            for (var product in order.products) ProductItem(product: product),
+            for (var product in sampleOrder.products)
+              ProductItem(product: product),
+            SizedBox(height: 16.0),
             SizedBox(height: 16.0),
           ],
         ),
@@ -83,45 +97,82 @@ class Payment extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              Text('Phương Thức Thanh Toán: ${order.paymentMethod}'),
-              Text('Tổng Tiền: ${order.totalAmount}'),
+              Text('Tổng Tiền: '),
               Center(
-                  child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Submit(sampleOrder.products, diachi.text);
+                  },
                   child: Text('Xác Nhận Thanh Toán'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFBA1541),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                    padding:
-                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                  ),
                 ),
-              ))
+              )
             ],
-          )
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //   children: <Widget>[
-          //     Text('Tổng Tiền: ${order.totalAmount}'),
-          //     ElevatedButton(
-          //       onPressed: () {
-          //
-          //       },
-          //       child: Text('Xác Nhận Thanh Toán'),
-          //     ),
-          //   ],
-          // ),
-          ),
+          )),
     );
   }
 }
 
+// class Oder extends StatelessWidget {
+//   const Oder({super.key, required this.order});
+//   final Order order;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Chi tiết đặt hàng'),
+//       ),
+//       body: Padding(
+//         padding: EdgeInsets.all(16.0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Row(
+//               children: [
+//                 Text('Ngày Mua:'),
+//                 TextField(
+//                   decoration: InputDecoration(
+//                     hintText: 'Nhập vào đây',
+//                   ),
+//                 )
+//               ],
+//             ),
+//             Text('Ngày Mua: ${order.date}'),
+//             Text('Địa Chỉ: ${order.address}'),
+//             Text('Trạng Thái: ${order.status}'),
+//             SizedBox(height: 16.0),
+//             Text('Sản Phẩm:'),
+//             for (var product in order.products) ProductItem(product: product),
+//             SizedBox(height: 16.0),
+//             SizedBox(height: 16.0),
+//           ],
+//         ),
+//       ),
+//       bottomNavigationBar: BottomAppBar(
+//           shape: CircularNotchedRectangle(),
+//           child: Column(
+//             mainAxisAlignment: MainAxisAlignment.start,
+//             crossAxisAlignment: CrossAxisAlignment.start,
+//             mainAxisSize: MainAxisSize.min,
+//             children: <Widget>[
+//               Text('Phương Thức Thanh Toán: ${order.paymentMethod}'),
+//               Text('Tổng Tiền: ${order.totalAmount}'),
+//               Center(
+//                 child: ElevatedButton(
+//                   onPressed: () {},
+//                   child: Text('Xác Nhận Thanh Toán'),
+//                 ),
+//               )
+//             ],
+//           )
+
+//           ),
+//     );
+//   }
+// }
+
 class ProductItem extends StatelessWidget {
-  final Product product;
+  final CartObj product;
 
   ProductItem({required this.product});
 
@@ -136,8 +187,8 @@ class ProductItem extends StatelessWidget {
           height: 50,
           fit: BoxFit.cover,
         ),
-        title: Text(product.name),
-        subtitle: Text('Giá: ${product.price}'),
+        title: Text(product.ten_sp),
+        subtitle: Text('Giá: ${product.gia_ban}'),
         trailing: Text('Số lượng: 1'),
       ),
     );

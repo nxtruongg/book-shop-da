@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'dangxuly.dart';
-import 'history.dart';
+import 'detaillxacnhan.dart';
 
 class menudonhang extends StatelessWidget {
   @override
@@ -33,13 +33,13 @@ class menudonhang extends StatelessWidget {
           body: TabBarView(
             children: [
               // Nội dung cho tab 'Chờ xác nhận'
-              xuly(),
+
               // Nội dung cho tab 'Chờ lấy hàng'
               Center(child: Text('Chờ lấy hàng')),
               // Nội dung cho tab 'Chờ giao hàng'
               Center(child: Text('Chờ giao hàng')),
               // Nội dung cho tab 'Đã giao'
-              OrderHistoryPage(),
+
               // Nội dung cho tab 'Đã hủy'
               Center(child: Text('Đã hủy')),
             ],

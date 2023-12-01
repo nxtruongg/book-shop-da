@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'editprofile.dart';
-import 'history.dart';
+import 'detaillxacnhan.dart';
 import 'login_screen.dart';
 import 'menudonhang.dart';
 

@@ -1,4 +1,6 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:ontap3011/models/cartmodels.dart';
 import 'package:ontap3011/payment.dart';
 
 class Cart extends StatefulWidget {
@@ -9,41 +11,58 @@ class Cart extends StatefulWidget {
 }
 
 class _CartState extends State<Cart> {
-  List<Product> cartItems = [
-    Product(name: 'Sản phẩm 1', price: 20.0, image: 'images/logo.png'),
-    Product(name: 'Sản phẩm 2', price: 30.0, image: 'images/logo.png')
-  ];
+  final CartModels cartmodels = CartModels();
+  late List<CartObj> cartItems = [];
+
   @override
+  void initState() {
+    super.initState();
+    loadCarts();
+  }
+
+  Future<void> loadCarts() async {
+    try {
+      cartItems = await cartmodels.getCart();
+      setState(() {});
+    } catch (e) {}
+  }
+
+  Future<void> deleteItemCart(CartObj item) async {
+    await cartmodels.deleteItemCart(item);
+    setState(() {
+      cartItems.remove(item);
+    });
+  }
+
   Widget build(BuildContext context) {
+    print(cartItems);
     return Scaffold(
       appBar: AppBar(
         title: Text('Giỏ Hàng'),
-        backgroundColor: Color(0xFFBA1541),
       ),
-      body: ListView.builder(
-        itemCount: cartItems.length,
-        itemBuilder: (context, index) {
-          return CartItem(
-            product: cartItems[index],
-            onIncrease: () {
-              setState(() {
-                // Tăng số lượng sản phẩm
-              });
-            },
-            onDecrease: () {
-              setState(() {
-                // Giảm số lượng sản phẩm
-              });
-            },
-            onRemove: () {
-              setState(() {
-                // Xóa sản phẩm khỏi giỏ hàng
-                cartItems.removeAt(index);
-              });
-            },
-          );
-        },
-      ),
+      body: cartItems != null
+          ? ListView.builder(
+              itemCount: cartItems.length,
+              itemBuilder: (context, index) {
+                return CartItem(
+                  product: cartItems[index],
+                  onIncrease: () {
+                    setState(() {
+                      // Tăng số lượng sản phẩm
+                    });
+                  },
+                  onDecrease: () {
+                    setState(() {
+                      // Giảm số lượng sản phẩm
+                    });
+                  },
+                  onRemove: () {
+                    deleteItemCart(cartItems[index]);
+                  },
+                );
+              },
+            )
+          : null,
       bottomNavigationBar: BottomAppBar(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -53,19 +72,13 @@ class _CartState extends State<Cart> {
               Text('Tổng tiền: ${calculateTotalPrice()}'),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => PayMentPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => OderPage(cart: cartItems)));
                   //  nút thanh toán
                 },
                 child: Text('Thanh toán'),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFBA1541),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                ),
               ),
             ],
           ),
@@ -75,20 +88,12 @@ class _CartState extends State<Cart> {
   }
 
   double calculateTotalPrice() {
-    return cartItems.fold(0.0, (sum, item) => sum + item.price);
+    return cartItems.fold(0.0, (sum, item) => sum + item.gia_ban);
   }
 }
 
-class Product {
-  final String name;
-  final double price;
-  final String image;
-
-  Product({required this.name, required this.price, required this.image});
-}
-
 class CartItem extends StatelessWidget {
-  final Product product;
+  final CartObj product;
   final VoidCallback onIncrease;
   final VoidCallback onDecrease;
   final VoidCallback onRemove;
@@ -111,11 +116,11 @@ class CartItem extends StatelessWidget {
           height: 56.0,
           fit: BoxFit.cover,
         ),
-        title: Text(product.name),
+        title: Text(product.ten_sp),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Giá: ${product.price}'),
+            Text('Giá: ${product.gia_ban}'),
             Row(
               children: [
                 IconButton(
