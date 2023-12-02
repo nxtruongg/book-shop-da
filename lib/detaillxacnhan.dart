@@ -25,33 +25,33 @@ class OrderItem {
   });
 }
 
-class OrderHistoryPage extends StatelessWidget {
-  final List<Order> order;
+// class OrderHistoryPage extends StatelessWidget {
+//   final List<Order> order;
 
-  OrderHistoryPage({required this.order});
+//   OrderHistoryPage({required this.order});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: order.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text('Đơn hàng ${order[index].orderId}'),
-            subtitle: Text('Ngày đặt: ${order[index].orderDate}'),
-            trailing: Text('Tổng cộng: ${order[index].orderTotal}'),
-            onTap: () {
-              // Chuyển đến trang chi tiết đơn hàng khi nhấp vào
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OrderDetailPage(order: order[index]),
-                ),
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: ListView.builder(
+//         itemCount: order.length,
+//         itemBuilder: (context, index) {
+//           return ListTile(
+//             title: Text('Đơn hàng ${order[index].orderId}'),
+//             subtitle: Text('Ngày đặt: ${order[index].orderDate}'),
+//             trailing: Text('Tổng cộng: ${order[index].orderTotal}'),
+//             onTap: () {
+//               // Chuyển đến trang chi tiết đơn hàng khi nhấp vào
+//               Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => OrderDetailPage(order: order[index]),
+//                 ),
+//               );
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }

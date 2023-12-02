@@ -13,7 +13,7 @@ class CustomDialog {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Close'),
+              child: Text('OK'),
             ),
           ],
         );

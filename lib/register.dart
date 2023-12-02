@@ -60,6 +60,12 @@ class _RegistrationFormState extends State<Register_Screen> {
       if (response.statusCode == 200) {
         CustomDialog.showMyDialog(
             context, "Thành công", "bạn đã đăng ký thành công!");
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),
+          ),
+        );
         print('Thanhcong ${json.encode(response.data)}');
       } else {
         print('Registration failed. Status code: ${response.statusCode}');

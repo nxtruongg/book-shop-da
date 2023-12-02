@@ -23,7 +23,7 @@ class status {
     _id = id;
   }
 
-  factory status.fromJstatusn(Map<String, dynamic> jstatusn) {
+  factory status.fromJson(Map<String, dynamic> jstatusn) {
     return status(
       id: jstatusn['_id'],
       ma_kh: jstatusn['ma_kh'] ?? '',
@@ -44,16 +44,12 @@ class status {
 class statusModels {
   final Dio dio = Dio();
 
-  Future<Map<String, dynamic>> Postdata(List<CartObj> details, dia_chi) async {
-    List<Map<String, dynamic>> detailsList =
-        details.map((cartObj) => cartObj.toJstatusn()).toList();
-
+  Future<List<status>> getProfile() async {
     try {
-      final response = await dio.post(
-          'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/statusapp?access_token=70f4bbed48a5d186e31323b2136f15a7',
-          data: {'details': detailsList, 'dia_chi': dia_chi});
+      final response = await dio.get(
+          'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/soapp?access_token=70f4bbed48a5d186e31323b2136f15a7');
       print('data ${response.data}');
-      return response.data;
+      return List<status>.from(response.data.map((dt) => status.fromJson(dt)));
     } catch (e) {
       print('Lỗi $e');
       throw e;

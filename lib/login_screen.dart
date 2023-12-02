@@ -5,12 +5,17 @@ import 'package:ontap3011/register.dart';
 import 'package:ontap3011/trangchu.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
-
-import 'main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreen createState() => _LoginScreen();
+}
+
+void saveTokenToLocalStorage(String token) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString('token', token);
+  print('Token saved to local storage: $token');
 }
 
 class _LoginScreen extends State<LoginScreen> {
@@ -19,6 +24,19 @@ class _LoginScreen extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
   String? emailError;
   String? passwordError;
+  String displayedToken = "Token is not available";
+
+  Future<void> displayTokenFromLocalStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token != null) {
+      // Nếu có token, cập nhật giá trị displayedToken
+      setState(() {
+        displayedToken = token;
+      });
+    }
+  }
 
   Future<void> login() async {
     var headers = {
@@ -31,7 +49,6 @@ class _LoginScreen extends State<LoginScreen> {
               .encode('${emailController.text}:${passwordController.text}'));
       headers['Authorization'] =
           basicAuth; // Thêm thông tin Authorization mới vào headers
-
       var dio = Dio();
       var response = await dio.request(
         'https://api.goodapp.vn/auth/local',
@@ -42,9 +59,18 @@ class _LoginScreen extends State<LoginScreen> {
       );
 
       if (response.statusCode == 200) {
+        String token = (json.encode(response.data));
+        saveTokenToLocalStorage(token);
+
         CustomDialog.showMyDialog(
             context, "Thanh cong", "ban da dang nhap thanh cong!");
 
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Menu(),
+          ),
+        );
         print(json.encode(response.data));
       } else {
         print(response.statusMessage);
@@ -60,7 +86,7 @@ class _LoginScreen extends State<LoginScreen> {
 
           CustomDialog.showMyDialog(context, "Error",
               'Dang nhap khong thanh cong ${dioError.response!.data}');
-          // print('Headers: ${dioError.response!.headers}');
+          print('Headers: ${dioError.response!.headers}');
         }
       }
       print('Error: $error');
