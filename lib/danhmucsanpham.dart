@@ -1,187 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:ontap3011/pagedanhmucsanpham/tieuthuyet.dart';
 
-class danhmucsanpham extends StatelessWidget {
+import 'pagedanhmucsanpham/anime.dart';
+import 'pagedanhmucsanpham/ngontinh.dart';
+import 'pagedanhmucsanpham/tamlinh.dart';
+import 'pagedanhmucsanpham/truyencuoi.dart';
+import 'pagedanhmucsanpham/truyendangian.dart';
+
+class DanhMucSanPham extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: [
-          //for (int i = 1; i < 7; i++)
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Images/1.png",
-                  width: 40,
-                  height: 40,
-                ),
-                Text(
-                  'Tiểu Thuyết',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Images/2.png",
-                  width: 40,
-                  height: 40,
-                ),
-                Text(
-                  'Ngôn tình',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Images/3.png",
-                  width: 40,
-                  height: 40,
-                ),
-                Text(
-                  'Tâm Linh',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Images/4.png",
-                  width: 40,
-                  height: 40,
-                ),
-                Text(
-                  'Anime',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Images/5.png",
-                  width: 40,
-                  height: 40,
-                ),
-                Text(
-                  'truyện cười',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Image.asset(
-                  "Images/6.png",
-                  width: 40,
-                  height: 40,
-                ),
-                Text(
-                  'Truyện Dân Gian',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 10,
-                    color: Colors.red,
-                  ),
-                )
-              ],
-            ),
-          ),
+          _buildCategory(context, "Images/1.png", 'Tiểu Thuyết', () {
+            // Xử lý khi nhấp vào hình ảnh Tiểu Thuyết
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => danhmuctieuthuyet(),
+                ));
+          }),
+          _buildCategory(context, "Images/2.png", 'Ngôn tình', () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => danhmucngontinh(),
+                ));
+            // Xử lý khi nhấp vào hình ảnh Ngôn tình
+          }),
+          _buildCategory(context, "Images/3.png", 'Tâm Linh', () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => danhmuctamlinh(),
+                ));
+            // Xử lý khi nhấp vào hình ảnh Ngôn tình
+          }),
+          _buildCategory(context, "Images/4.png", 'Anime', () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => danhmucanime(),
+                ));
+            // Xử lý khi nhấp vào hình ảnh Ngôn tình
+          }),
+          _buildCategory(context, "Images/5.png", 'Truyện Cười', () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => danhmuctruyencuoi(),
+                ));
+
+            // Xử lý khi nhấp vào hình ảnh Ngôn tình
+          }),
+          _buildCategory(context, "Images/6.png", 'Truyện dân Gian', () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => danhmuctruyendangian(),
+                ));
+            // Xử lý khi nhấp vào hình ảnh Ngôn tình
+          }),
+          // ...Thêm các hình ảnh khác tương tự
         ],
       ),
     );
   }
-}
-///body: Column(
-//         children: [
-//           Container(
-//             margin: EdgeInsets.symmetric(horizontal: 15),
-//             padding: EdgeInsets.symmetric(horizontal: 15),
-//             height: 50,
-//             decoration: BoxDecoration(
-//               color: Colors.white,
-//               borderRadius: BorderRadius.circular(25),
-//             ),
-//             child: Row(
-//               children: [
-//                 Container(
-//                   margin: EdgeInsets.only(left: 5),
-//                   height: 50,
-//                   width: 200,
-//                   child: TextFormField(
-//                     decoration: InputDecoration(
-//                       border: InputBorder.none,
-//                       hintText: ' tim kiem san pham',
-//                       prefixIcon: Icon(Icons.search), // them icon cho tim kiếm
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
 
+  Widget _buildCategory(BuildContext context, String imagePath,
+      String categoryName, VoidCallback onTapCallback) {
+    return GestureDetector(
+      onTap: onTapCallback,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        margin: EdgeInsets.all(8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Image.asset(
+              imagePath,
+              width: 40,
+              height: 40,
+            ),
+            SizedBox(width: 8.0),
+            Text(
+              categoryName,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 10,
+                color: Colors.red,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

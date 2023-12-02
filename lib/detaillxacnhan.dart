@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'OrderDetailPage.dart';
 
 class Order {
   final String orderId;
@@ -30,6 +29,7 @@ class OrderItem {
 
 //   OrderHistoryPage({required this.order});
 
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(
@@ -55,3 +55,29 @@ class OrderItem {
 //     );
 //   }
 // }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: ListView.builder(
+  //       itemCount: order.length,
+  //       itemBuilder: (context, index) {
+  //         return ListTile(
+  //           title: Text('Đơn hàng ${order[index].orderId}'),
+  //           subtitle: Text('Ngày đặt: ${order[index].orderDate}'),
+  //           trailing: Text('Tổng cộng: ${order[index].orderTotal}'),
+  //           onTap: () {
+  //             // Chuyển đến trang chi tiết đơn hàng khi nhấp vào
+  //             // Navigator.push(
+  //             //   context,
+  //             //   MaterialPageRoute(
+  //             //     builder: (context) => OrderDetailPage(order: order[index]),
+  //             //   ),
+  //             // );
+  //           },
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+

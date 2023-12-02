@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ontap3011/cart.dart';
 import 'package:ontap3011/product_object.dart';
 
 class ProductDetail extends StatefulWidget {
@@ -35,7 +36,9 @@ class ProductDetailState extends State<ProductDetail> {
                       height: 350,
                       child: Hero(
                         tag: 'productimage_${this.widget.product.productname}',
-                        child: Image.network(this.widget.product.picture),
+                        child: Image.network(
+                            'https://api.goodapp.vn${this.widget.product.picture}?access_token=flex.public.token' ??
+                                ''),
                       ),
                     ),
                     SizedBox(
@@ -89,7 +92,7 @@ class ProductDetailState extends State<ProductDetail> {
                           height: 0,
                         ),
                         Text(
-                          this.widget.product.nhacungcap,
+                          this.widget.product.nhacungcap ?? '',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -98,7 +101,7 @@ class ProductDetailState extends State<ProductDetail> {
                           ),
                         ),
                         Text(
-                          this.widget.product.nhaxuatban,
+                          this.widget.product.nhaxuatban ?? '',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -107,7 +110,7 @@ class ProductDetailState extends State<ProductDetail> {
                           ),
                         ),
                         Text(
-                          this.widget.product.tacgia,
+                          this.widget.product.tacgia ?? '',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -116,7 +119,7 @@ class ProductDetailState extends State<ProductDetail> {
                           ),
                         ),
                         Text(
-                          this.widget.product.hinhthucbia,
+                          this.widget.product.hinhthucbia ?? '',
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
@@ -132,7 +135,7 @@ class ProductDetailState extends State<ProductDetail> {
                   width: 10,
                 ),
                 Text(
-                  this.widget.product.productname,
+                  this.widget.product.productname ?? '',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
@@ -165,13 +168,44 @@ class ProductDetailState extends State<ProductDetail> {
                     color: Colors.red,
                   ),
                 ),
+                //    ElevatedButton(
+                //   onPressed: () {
+                //     Navigator.push(context,
+                //         MaterialPageRoute(builder: (context) => PayMentPage()));
+                //     //  nút thanh toán
+                //   },
+                //   child: Text('Thanh toán'),
+                //   style: ElevatedButton.styleFrom(
+                //     primary: Color(0xFFBA1541),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(18.0),
+                //     ),
+                //     padding:
+                //         EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                //   ),
+                // ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => Cart()));
+                    //  nút thanh toán
+                  },
+                  child: Text('Mua Ngay'),
+                  style: ElevatedButton.styleFrom(
+                    primary: Color(0xFFBA1541),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                  ),
+                ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            margin: EdgeInsets.only(top: 10.0),
-            child: ElevatedButton.icon(
+            padding: const EdgeInsets.all(15),
+            child: ElevatedButton(
               onPressed: () {
                 showDialog(
                     context: context,
@@ -187,20 +221,18 @@ class ProductDetailState extends State<ProductDetail> {
                       );
                     });
               },
-              icon: Icon(
-                Icons.shopping_cart,
-                size: 24.0,
-              ),
-              label: Text(
-                'Mua ngay',
-                style: TextStyle(fontSize: 18),
-              ),
               style: ElevatedButton.styleFrom(
-                primary: Color(0xFFBA1541),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.shopping_cart),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text('Thêm Vào Giỏ Hàng'),
+                ],
               ),
             ),
           ),

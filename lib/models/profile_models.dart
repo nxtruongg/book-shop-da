@@ -78,4 +78,24 @@ class Profilemodel {
   //     throw e;
   //   }
   // }
+// Future<void> getProfilr ()async{
+//         final response = await dio.get(
+//           'https://api.goodapp.vn/api/profile?access_token=',
+//           options: options,
+//         );
+//         print('data ${response.data}');
+//         return List<Profile>.from(
+//           response.data.map((dt) => Profile.fromJson(dt)),
+//         );
+//       } else {
+//         // Xử lý trường hợp người dùng chưa đăng nhập
+//         print('Người dùng chưa đăng nhập');
+//         return [];
+//       }
+//     } catch (e) {
+//       print('Lỗi $e');
+//       throw e;
+//     }
+//   }
+
 }
