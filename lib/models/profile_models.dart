@@ -10,12 +10,12 @@ class Profile {
   final String email2;
 
   Profile({
-    required String id, 
+    required String id,
     required this.name,
     required this.picture,
     required this.email,
     required this.address,
-    required this.email2,  
+    required this.email2,
   }) {
     id = id;
   }
@@ -47,7 +47,7 @@ Future<String?> getToken() async {
   return prefs.getString('token');
 }
 
-class Profile {
+class Profile2 {
   final Dio dio = Dio();
 
   Future<List<Profile>> getprofile() async {
@@ -60,7 +60,7 @@ class Profile {
         final response = await dio.get(
           'https://api.goodapp.vn/api/profile?access_token=',
           options: options,
-        )
+        );
         print('data ${response.data}');
         return List<Profile>.from(
           response.data.map((dt) => Profile.fromJson(dt)),

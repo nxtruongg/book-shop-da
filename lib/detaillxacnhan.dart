@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'OrderDetailPage.dart';
 
 class Order {
   final String orderId;
@@ -42,12 +41,12 @@ class OrderHistoryPage extends StatelessWidget {
             trailing: Text('Tổng cộng: ${order[index].orderTotal}'),
             onTap: () {
               // Chuyển đến trang chi tiết đơn hàng khi nhấp vào
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => OrderDetailPage(order: order[index]),
-                ),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => OrderDetailPage(order: order[index]),
+              //   ),
+              // );
             },
           );
         },

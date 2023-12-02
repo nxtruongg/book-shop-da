@@ -1,8 +1,15 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ontap3011/danhmucsanpham.dart';
 import 'package:ontap3011/product_detail.dart';
 import 'package:ontap3011/product_object.dart';
-import 'package:ontap3011/product_provider.dart';
+
+import 'pagedanhmucsanpham/anime.dart';
+import 'pagedanhmucsanpham/ngontinh.dart';
+import 'pagedanhmucsanpham/tamlinh.dart';
+import 'pagedanhmucsanpham/tieuthuyet.dart';
+import 'pagedanhmucsanpham/truyencuoi.dart';
+import 'pagedanhmucsanpham/truyendangian.dart';
 
 class MenuScreen extends StatefulWidget {
   @override
@@ -13,17 +20,62 @@ class MenuScreen extends StatefulWidget {
 
 class MenuScreenState extends State<MenuScreen> {
   List<ProductObject> lsProducts = [];
-  void _LoadDanhSach() async {
-    final data = await ProductProvider.getAllContacts();
-    setState(() {});
-    lsProducts = data;
+  TextEditingController searchController = TextEditingController();
+  Dio dio = Dio(); // Khởi tạo đối tượng Dio
+  void _searchProducts(String query) async {
+    try {
+      // Thực hiện yêu cầu GET đến API với tham số tìm kiếm
+      Response response = await dio.get(
+          'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/product?access_token=flex.public.token',
+          queryParameters: {'productname': query});
+
+      if (response.statusCode == 200) {
+        // Nếu yêu cầu thành công, giải mã dữ liệu từ response
+        List<ProductObject> data = (response.data as List)
+            .map((json) => ProductObject.fromJson(json))
+            .toList();
+        setState(() {
+          lsProducts = data;
+        });
+      } else {
+        // Xử lý lỗi nếu yêu cầu không thành công
+        print('Lỗi khi tải dữ liệu từ API: ${response.statusMessage}');
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra
+      print('Lỗi: $e');
+    }
+  }
+
+  void _loadDanhSach() async {
+    _searchProducts(searchController.text);
+    try {
+      // Thực hiện yêu cầu GET đến API của bạn
+      Response response = await dio.get(
+          'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/product?access_token=flex.public.token');
+
+      if (response.statusCode == 200) {
+        // Nếu yêu cầu thành công, giải mã dữ liệu từ response
+        List<ProductObject> data = (response.data as List)
+            .map((json) => ProductObject.fromJson(json))
+            .toList();
+        setState(() {
+          lsProducts = data;
+        });
+      } else {
+        // Xử lý lỗi nếu yêu cầu không thành công
+        print('Lỗi khi tải dữ liệu từ API: ${response.statusMessage}');
+      }
+    } catch (e) {
+      // Xử lý nếu có lỗi xảy ra
+      print('Lỗi: $e');
+    }
   }
 
   @override
   void initState() {
-    // TODO: implemet initState
     super.initState();
-    _LoadDanhSach();
+    _loadDanhSach();
   }
 
   @override
@@ -59,6 +111,10 @@ class MenuScreenState extends State<MenuScreen> {
                 ],
               ),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => danhmuctieuthuyet()),
+                );
                 // Xử lý khi người dùng chọn mục "Tiểu Thuyết"
               },
             ),
@@ -71,19 +127,25 @@ class MenuScreenState extends State<MenuScreen> {
                 ],
               ),
               onTap: () {
-                // Xử lý khi người dùng chọn mục "Ngôn tình"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => danhmucngontinh()),
+                );
               },
             ),
             ListTile(
               title: Row(
                 children: [
-                  Icon(Icons.home, color: Colors.red), // Thêm icon tại đây
+                  Icon(Icons.book, color: Colors.red), // Thêm icon tại đây
                   SizedBox(width: 10), // Khoảng cách giữa icon và tiêu đề
                   Text('Tâm Linh'),
                 ],
               ),
               onTap: () {
-                // Xử lý khi người dùng chọn mục "Tiểu Thuyết"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => danhmuctamlinh()),
+                );
               },
             ),
             ListTile(
@@ -92,11 +154,14 @@ class MenuScreenState extends State<MenuScreen> {
                   Icon(Icons.book, color: Colors.red), // Thêm icon tại đây
                   //SizedBox(width: 10), // Khoảng cách giữa icon và tiêu đề
 
-                  Text('\n Anime'),
+                  Text('Anime'),
                 ],
               ),
               onTap: () {
-                // Xử lý khi người dùng chọn mục "Tiểu Thuyết"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => danhmucanime()),
+                );
               },
             ),
             ListTile(
@@ -107,7 +172,12 @@ class MenuScreenState extends State<MenuScreen> {
                   Text('Truyện Cười'),
                 ],
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => danhmuctruyencuoi()),
+                );
+              },
             ),
             ListTile(
               title: Row(
@@ -117,7 +187,13 @@ class MenuScreenState extends State<MenuScreen> {
                   Text('Truyện Dân Gian'),
                 ],
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => danhmuctruyendangian()),
+                );
+              },
             ),
           ],
         ),
@@ -130,10 +206,23 @@ class MenuScreenState extends State<MenuScreen> {
             height: 50,
             width: 200,
             child: TextFormField(
+              controller: searchController,
+              onChanged: (value) {
+                _searchProducts(value);
+              },
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: ' tim kiem san pham',
-                prefixIcon: Icon(Icons.search), // them icon cho tim kiếm
+                hintText: 'Tìm kiếm sản phẩm',
+                prefixIcon: Icon(Icons.search),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      searchController.clear();
+                      _searchProducts('');
+                    });
+                  },
+                ),
               ),
             ),
           ),
@@ -145,7 +234,7 @@ class MenuScreenState extends State<MenuScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          danhmucsanpham(),
+          DanhMucSanPham(),
           Text(
             'Sản Phẩm nỗi bật',
             style: TextStyle(
@@ -162,22 +251,45 @@ class MenuScreenState extends State<MenuScreen> {
               children: List.generate(lsProducts.length, (index) {
                 return Card(
                   child: ListTile(
-                    title: Text(
-                      lsProducts[index].productname,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+                    title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          lsProducts[index].productname ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          '${lsProducts[index].giamgia} Vnd ',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            decoration: TextDecoration.lineThrough,
+                          ),
+                        ),
+                        Text(
+                          '${lsProducts[index].percent} %',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          ),
+                        ),
+                        Text(
+                          '${lsProducts[index].price} VNĐ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFBA1541),
+                          ),
+                        ),
+                      ],
                     ),
                     leading: Hero(
                       tag: 'productimage_${lsProducts[index].productname}',
-                      child: Image.network(lsProducts[index].picture),
-                    ),
-                    subtitle: Text(
-                      '${lsProducts[index].price} VNĐ',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFFBA1541),
-                      ),
+                      child: Image.network(
+                          'https://api.goodapp.vn${lsProducts[index].picture}?access_token=flex.public.token' ??
+                              ''),
                     ),
                     onTap: () {
                       Navigator.push(
@@ -189,6 +301,7 @@ class MenuScreenState extends State<MenuScreen> {
                       );
                     },
                   ),
+                  ////////////////
                 );
               }),
             ),

@@ -44,19 +44,19 @@ class status {
 class statusModels {
   final Dio dio = Dio();
 
-  Future<Map<String, dynamic>> Postdata(List<CartObj> details, dia_chi) async {
-    List<Map<String, dynamic>> detailsList =
-        details.map((cartObj) => cartObj.toJstatusn()).toList();
+  // Future<Map<String, dynamic>> Postdata(List<CartObj> details, dia_chi) async {
+  //   List<Map<String, dynamic>> detailsList =
+  //       details.map((cartObj) => cartObj.toJstatusn()).toList();
 
-    try {
-      final response = await dio.post(
-          'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/statusapp?access_token=70f4bbed48a5d186e31323b2136f15a7',
-          data: {'details': detailsList, 'dia_chi': dia_chi});
-      print('data ${response.data}');
-      return response.data;
-    } catch (e) {
-      print('Lỗi $e');
-      throw e;
-    }
-  }
+  //   try {
+  //     final response = await dio.post(
+  //         'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/statusapp?access_token=70f4bbed48a5d186e31323b2136f15a7',
+  //         data: {'details': detailsList, 'dia_chi': dia_chi});
+  //     print('data ${response.data}');
+  //     return response.data;
+  //   } catch (e) {
+  //     print('Lỗi $e');
+  //     throw e;
+  //   }
+  // }
 }
