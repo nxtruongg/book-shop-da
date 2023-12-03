@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ontap3011/cart.dart';
+import 'package:ontap3011/models/cartmodels.dart';
 import 'package:ontap3011/product_object.dart';
 
 class ProductDetail extends StatefulWidget {
   ProductObject product;
   ProductDetail({Key? key, required this.product}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() {
@@ -13,7 +15,10 @@ class ProductDetail extends StatefulWidget {
 }
 
 class ProductDetailState extends State<ProductDetail> {
+  final CartModels cartModels = CartModels();
   @override
+
+
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -207,6 +212,8 @@ class ProductDetailState extends State<ProductDetail> {
             padding: const EdgeInsets.all(15),
             child: ElevatedButton(
               onPressed: () {
+                cartModels.addItemtoCart(this.widget.product.id,this.widget.product.price,this.widget.product.percent);
+
                 showDialog(
                     context: context,
                     builder: (context) {

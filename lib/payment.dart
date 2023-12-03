@@ -29,8 +29,9 @@ class OderPage extends StatefulWidget {
 class _OderPageState extends State<OderPage> {
   final TextEditingController diachi = TextEditingController();
   final SoModels soModels = SoModels();
-  void Submit(details, String dia_chi) async {
-    await soModels.Postdata(details, dia_chi);
+  void Submit(details, String dia_chi,double tien_hang, double tien_ck,double tong_tien) async {
+    print(details);
+    await soModels.Postdata(details, dia_chi,tien_hang,tien_ck,tong_tien);
     CustomDialog.showMyDialog(context, "Thanh cong", "Tao don hang thanh cong");
   }
 
@@ -42,12 +43,12 @@ class _OderPageState extends State<OderPage> {
           message,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 18.0, color: Colors.white), // Thay đổi màu văn bản
+              fontSize: 18.0, color: Colors.white), 
         ),
       ),
       duration: Duration(seconds: 3),
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.green, // Thay đổi màu nền
+      backgroundColor: Colors.green, 
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -91,23 +92,45 @@ class _OderPageState extends State<OderPage> {
       ),
       bottomNavigationBar: BottomAppBar(
           shape: CircularNotchedRectangle(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text('Tổng Tiền: '),
-              Center(
-                child: ElevatedButton(
+          child:Padding(
+            padding: EdgeInsets.all(4.0),
+            child:  Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text('Tiền hàng: ${calculateTotalPriceTH(sampleOrder.products)}'),
+                    Text('Chiết khấu: ${calculateTotalPriceCK(sampleOrder.products)}'),
+                    Text('Thành Tiền: ${calculateTotalPrice(sampleOrder.products)}'),
+
+                  ],
+                ),
+                ElevatedButton(
                   onPressed: () {
-                    Submit(sampleOrder.products, diachi.text);
+                    Submit(sampleOrder.products, diachi.text,calculateTotalPriceTH(sampleOrder.products),calculateTotalPriceCK(sampleOrder.products),calculateTotalPrice(sampleOrder.products));
                   },
                   child: Text('Xác Nhận Thanh Toán'),
-                ),
-              )
-            ],
-          )),
+                )
+              ],
+            ),
+          )
+
+
+
+    ),
     );
+  }
+  double calculateTotalPriceTH(data) {
+    return data.fold(0.0, (sum, item) => sum + (item.gia_ban*item.sl));
+  }
+  double calculateTotalPriceCK(data) {
+    return data.fold(0.0, (sum, item) => sum + (item.gia_ban*item.sl)*(item.tien_ck/100));
+  }
+  double calculateTotalPrice(data) {
+    return data.fold(0.0, (sum, item) => sum + (item.gia_ban*item.sl)*((100-item.tien_ck)/100));
   }
 }
 
@@ -186,9 +209,9 @@ class ProductItem extends StatelessWidget {
           height: 50,
           fit: BoxFit.cover,
         ),
-        title: Text(product.ten_sp),
-        subtitle: Text('Giá: ${product.gia_ban}'),
-        trailing: Text('Số lượng: 1'),
+        title: Row(children: [Text(product.ten_sp),Text(product.tien_ck>0?' -${product.tien_ck}%':"",style: TextStyle(color: Colors.red),)],),
+        subtitle: Text('Thành tiền: ${(product.gia_ban*product.sl)*(100-product.tien_ck)/100}'),
+        trailing: Text('Số lượng: ${product.sl}'),
       ),
     );
   }
