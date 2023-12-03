@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:ontap3011/models/profile_models.dart';
 
 import 'editprofile.dart';
-import 'detaillxacnhan.dart';
 import 'login_screen.dart';
 import 'menudonhang.dart';
 
 class ProfileScreen extends StatelessWidget {
+  final Profilemodel profilemodel = Profilemodel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
           padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CircleAvatar(
                 radius: 50,
@@ -33,38 +35,53 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
-                'Phan Minh Trí',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 176, 5, 8),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Email: phanminhtri@gmail.com',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Số điện thoại: 0123 456 789',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Địa chỉ:',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              Text(
-                'Chung cư 212 Nguyễn Trãi, Thành phố HCM',
-                style: TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
+              FutureBuilder(
+                future: profilemodel.GetProfile(),
+                builder: (context, snapshot) {
+                  print(snapshot);
+                  if (snapshot.hasData) {
+                    final data = snapshot.data;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20),
+                        Text(
+                          '${data!['name'] ?? 'Chưa có tên'}',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 174, 32, 22),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Email:  ${data['email2'] ?? 'Chưa có'}',
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Số điện thoại: ${data!['email'] ?? 'Không có'}',
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Địa chỉ:',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          '${data!['eddress'] ?? 'Chung cư 212 Nguyễn Trãi, Thành phố HCM'}',
+                          style: TextStyle(fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Text('lỗi');
+                  }
+                },
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 30.0),

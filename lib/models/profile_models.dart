@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class Profile {
   late final String id;
@@ -44,58 +45,48 @@ Future<String?> getTokenFromLocalStorage() async {
 
 class Profilemodel {
   final Dio dio = Dio();
-  // Future<List<Profile>> getProfile() async {
-  //   try {
-  //     String? token = await getTokenFromLocalStorage();
-  //     if (token != null) {
-  //       final response =
-  //           await dio.get('https://api.goodapp.vn/api/profile?access_token=');
-  //       print('data $token');
-  //       return List<Profile>.from(
-  //           response.data.map((dt) => Profile.fromJson(dt)));
-  //     } else {
-  //       print('Token not found in local storage');
+  Future<Map<String, dynamic>> GetProfile() async {
+    String? token = await getTokenFromLocalStorage();
+    Map<String, dynamic> tk = jsonDecode(token ?? "");
+    print('token ${tk['token']}');
+    try {
+      final rs = await dio.get(
+          'https://api.goodapp.vn/api/profile?access_token=${tk['token']}');
+      print('data2r ${rs.data}');
+      return rs.data;
+    } catch (e) {
+      throw Exception('Lỗi $e');
+    }
+  }
 
-  //     }
-  //   } catch (e) {
-  //     print('Lỗi $e');
-  //     throw e;
-  //   }
-  // }
+  Future<void> EditProfile(String? name, String? email, String? address) async {
+    Map<String, dynamic> data = {
+      'name': name,
+      'email2': email,
+      'address': address,
+    };
+    try {
+      String? token = await getTokenFromLocalStorage();
+      Map<String, dynamic> tk = jsonDecode(token ?? "");
+      final rs = await dio.post(
+          'https://api.goodapp.vn/api/updateprofile?access_token=${tk['token']}',
+          data: jsonEncode(data));
 
-  //  Future<Map<String, dynamic>> Postdata(List<CartObj> details, dia_chi) async {
-  //   List<Map<String, dynamic>> detailsList =
-  //       details.map((cartObj) => cartObj.toJson()).toList();
+      print('Update Profile ${rs.data}');
+    } catch (e) {
+      if (e is DioError) {
+        DioError dioError = e;
+        print('Dio Error: ${dioError.message}');
 
-  //   try {
-  //     final response = await dio.post(
-  //         'https://api.goodapp.vn/api/648deb5c4992aaaa9b8a165d/soapp?access_token=70f4bbed48a5d186e31323b2136f15a7',
-  //         data: {'details': detailsList, 'dia_chi': dia_chi});
-  //     print('data ${response.data}');
-  //     return response.data;
-  //   } catch (e) {
-  //     print('Lỗi $e');
-  //     throw e;
-  //   }
-  // }
-// Future<void> getProfilr ()async{
-//         final response = await dio.get(
-//           'https://api.goodapp.vn/api/profile?access_token=',
-//           options: options,
-//         );
-//         print('data ${response.data}');
-//         return List<Profile>.from(
-//           response.data.map((dt) => Profile.fromJson(dt)),
-//         );
-//       } else {
-//         // Xử lý trường hợp người dùng chưa đăng nhập
-//         print('Người dùng chưa đăng nhập');
-//         return [];
-//       }
-//     } catch (e) {
-//       print('Lỗi $e');
-//       throw e;
-//     }
-//   }
+        if (dioError.response != null) {
+          print('Status code: ${dioError.response!.statusCode}');
+          print('Data: ${dioError.response!.data}');
 
+          print('Headers: ${dioError.response!.headers}');
+        }
+      }
+
+      throw Exception(e);
+    }
+  }
 }

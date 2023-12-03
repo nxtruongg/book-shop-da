@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ontap3011/cart.dart';
 import 'package:ontap3011/profile.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login_screen.dart';
 import 'menu_screen.dart';
@@ -20,15 +21,39 @@ class NavigationBar extends StatefulWidget {
   _NavigationBarState createState() => _NavigationBarState();
 }
 
+Future<String?> getTokenFromLocalStorage() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('token');
+}
+
+Future<String?> fetchData() async {
+  String? token = await getTokenFromLocalStorage();
+  if (token != null) {
+    return token;
+  } else {
+    print('Không có token được tìm thấy trong local storage');
+    return null;
+  }
+}
+
 class _NavigationBarState extends State<NavigationBar> {
   int _currentIndex = 0;
   PageController _pageController = PageController();
   List<Widget> _pages = [
     MenuScreen(),
-    LoginScreen(),
+    FutureBuilder<String?>(
+      future: fetchData(),
+      builder: (context, snapshot) {
+        if (snapshot.data == null) {
+          return ProfileScreen();
+        } else {
+          return LoginScreen();
+        }
+      },
+    ),
     Cart(),
     NotificationsScreen(),
-    ProfileScreen()
+    ProfileScreen(),
   ];
 
   void _onTabTapped(int index) {
@@ -79,8 +104,8 @@ class _NavigationBarState extends State<NavigationBar> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            activeIcon: Icon(Icons.person, color: Color(0xFFBA1541)),
-            label: 'Thông tin cá nhân',
+            activeIcon: Icon(Icons.search, color: Color(0xFFBA1541)),
+            label: 'Profile',
           ),
         ],
         selectedLabelStyle: TextStyle(color: Color(0xFFBA1541)),
